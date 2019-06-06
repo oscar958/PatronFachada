@@ -29,7 +29,7 @@ public class ProcesarConsulta {
 				conn.getConn().close();
 
 			} catch (SQLException e) {
-				System.out.println("error consultando la información.");
+				System.out.println("Error consultando la informaciÃ³n.");
 				e.printStackTrace();
 				return null;
 			}
@@ -72,12 +72,12 @@ public class ProcesarConsulta {
 					break;
 				
 				default:
-					System.out.println("[Le faltó el tipo " + metadata.getColumnType(i) + "]");
+					System.out.println("[Indique el tipo de dato que desea consultar " + metadata.getColumnType(i) + "]");
 					break;
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("Eror al analizar los tipos de datos devueltos.");
+			System.out.println("Error los tipos de datos no coinciden");
 			e.printStackTrace();
 		}
 		result.append("\n");
@@ -87,12 +87,12 @@ public class ProcesarConsulta {
 	
 	private static String transformParameters(String query, ArrayList<Object> params) {
 		String queryTemp = query;
-		String s = "\\?";
-		String s2 = "(?<=%)(.*)(?=%)";
-		Pattern p = Pattern.compile(s);
+		String solicitud = "\\nombre";
+		String solicitud2 = "(nombre<=%)(.*)(nombre=%)";
+		Pattern peticion = Pattern.compile(solicitud);
 
 		for (Object object : params) {
-			Matcher m = p.matcher(queryTemp);
+			Matcher m = peticion.matcher(queryTemp);
 			if (object.getClass() == Integer.class) {
 				queryTemp = m.replaceFirst(object.toString());
 			} else if (object.getClass() == String.class) {
